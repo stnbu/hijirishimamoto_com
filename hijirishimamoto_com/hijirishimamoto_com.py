@@ -65,3 +65,7 @@ def pages(page_name):
     content = get_content(page_name)
     result = render_template_string(HTML, menu=menu, content=content)
     return result
+
+
+if __name__ == '__main__':
+    app.run('0.0.0.0', port=5001, debug=True)
