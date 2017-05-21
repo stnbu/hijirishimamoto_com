@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 """
-    Flaskr Tests
+    hijirishimamoto_com Tests
     ~~~~~~~~~~~~
 
-    Tests the Flaskr application.
+    Tests the hijirishimamoto_com application.
 
     :copyright: (c) 2015 by Armin Ronacher.
     :license: BSD, see LICENSE for more details.
