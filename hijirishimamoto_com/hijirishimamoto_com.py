@@ -51,15 +51,15 @@ def get_menu(active):
             style = 'class="active"'
         else:
             style = ''
-        menu.append('<li><a {0} href="/{1}">{2}</a></li>'.format(style, page, title))
+        menu.append('<li><a {0} href="/{1}/">{2}</a></li>'.format(style, page, title))
     menu.append('</ul>')
     return '\n'.join(menu)
 
 @app.route('/')
 def root():
-    return redirect('/home')
+    return redirect('/home/')
 
-@app.route('/<page_name>')
+@app.route('/<page_name>/')
 def pages(page_name):
     menu = get_menu(active=page_name)
     content = get_content(page_name)
