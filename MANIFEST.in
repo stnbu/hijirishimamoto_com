@@ -1,0 +1,3 @@
+graft hijirishimamoto_com/templates
+graft hijirishimamoto_com/static
+include hijirishimamoto_com/schema.sql
