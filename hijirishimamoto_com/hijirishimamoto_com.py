@@ -20,7 +20,7 @@ HTML = u"""<!DOCTYPE html>
 <body>
 {{ menu|safe }}
 
-<div>
+<div class="content">
 {{ content|safe }}
 </div>
 
