@@ -109,6 +109,74 @@ def logout():
     flash('You were logged out')
     return redirect(url_for('show_entries'))
 
-@app.route('/<page_name>')
+
+from flask import render_template_string
+
+HTML = """<!DOCTYPE html>
+<html>
+<head>
+<style>
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+}
+
+li {
+    float: left;
+}
+
+li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+li a:hover:not(.active) {
+    background-color: #111;
+}
+
+.active {
+    background-color: #4CAF50;
+}
+</style>
+</head>
+<body>
+{{ menu|safe }}
+
+<div>
+{{ content }}
+</div>
+
+</body>
+</html>"""
+
+PAGES = [
+    'home',
+    'music',
+    'biography',
+    'lessons',
+    'contact',
+]
+
+def get_menu(active):
+    menu = ['<ul>']
+    for page in PAGES:
+        title = page.capitalize()
+        if page == active:
+            style = 'class="active"'
+        else:
+            style = ''
+        menu.append('<li><a {0} href="/x/{1}">{2}</a></li>'.format(style, page, title))
+    menu.append('</ul>')
+    return '\n'.join(menu)
+
+@app.route('/x/<page_name>')
 def pages(page_name):
-    return str(page_name)
+    menu = get_menu(active=page_name)
+    content = render_template_string(HTML, menu=menu, content=page_name)
+    return content
