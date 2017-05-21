@@ -112,7 +112,7 @@ def logout():
 
 from flask import render_template_string
 
-HTML = """<!DOCTYPE html>
+HTML = u"""<!DOCTYPE html>
 <html>
 <head>
 <style>
@@ -149,7 +149,7 @@ li a:hover:not(.active) {
 {{ menu|safe }}
 
 <div>
-{{ content }}
+{{ content|safe }}
 </div>
 
 </body>
@@ -163,6 +163,14 @@ PAGES = [
     'contact',
 ]
 
+def get_content(page_name):
+    assert page_name in PAGES, '{0} was not in allowed pages.'.format(page_name)
+    my_dir = os.path.dirname(os.path.realpath(__file__))
+    my_file = os.path.join(my_dir, 'pages', '{0}.html'.format(page_name))
+    with open(my_file, 'r') as f:
+        return f.read().decode('utf-8')
+
+
 def get_menu(active):
     menu = ['<ul>']
     for page in PAGES:
@@ -171,12 +179,13 @@ def get_menu(active):
             style = 'class="active"'
         else:
             style = ''
-        menu.append('<li><a {0} href="/x/{1}">{2}</a></li>'.format(style, page, title))
+        menu.append('<li><a {0} href="/{1}">{2}</a></li>'.format(style, page, title))
     menu.append('</ul>')
     return '\n'.join(menu)
 
-@app.route('/x/<page_name>')
+@app.route('/<page_name>')
 def pages(page_name):
     menu = get_menu(active=page_name)
-    content = render_template_string(HTML, menu=menu, content=page_name)
-    return content
+    content = get_content(page_name)
+    result = render_template_string(HTML, menu=menu, content=content)
+    return result
