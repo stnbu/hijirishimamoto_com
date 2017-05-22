@@ -3,18 +3,18 @@
 import os
 from sqlite3 import dbapi2 as sqlite3
 from flask import Flask, request, session, g, redirect, url_for, abort, \
-    flash, render_template_string, abort
+    flash, render_template_string, abort, send_from_directory
 
 
 # create our little application :)
 app = Flask(__name__)
 
 
-
 HTML = u"""<!DOCTYPE html>
 <html>
 <head>
 <link rel="stylesheet" type="text/css" href="/static/style.css">
+<link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
 </head>
 <body>
 {{ menu|safe }}
@@ -56,6 +56,13 @@ def get_menu(active):
 @app.route('/')
 def root():
     return redirect('/home/')
+
+
+# for certain broken browsers...
+@app.route('/favicon.ico')
+def favicon():
+    return send_from_directory(os.path.join(app.root_path, 'static'),
+                               'favicon.ico', mimetype='image/vnd.microsoft.icon')
 
 @app.route('/<page_name>/')
 def pages(page_name):
