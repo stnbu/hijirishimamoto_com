@@ -3,14 +3,13 @@
 import os
 from sqlite3 import dbapi2 as sqlite3
 from flask import Flask, request, session, g, redirect, url_for, abort, \
-    flash, render_template_string
+    flash, render_template_string, abort
 
 
 # create our little application :)
 app = Flask(__name__)
 
 
-from flask import render_template_string
 
 HTML = u"""<!DOCTYPE html>
 <html>
@@ -36,7 +35,6 @@ PAGES = [
 ]
 
 def get_content(page_name):
-    assert page_name in PAGES, '{0} was not in allowed pages.'.format(page_name)
     my_dir = os.path.dirname(os.path.realpath(__file__))
     my_file = os.path.join(my_dir, 'pages', '{0}.html'.format(page_name))
     with open(my_file, 'r') as f:
@@ -61,6 +59,8 @@ def root():
 
 @app.route('/<page_name>/')
 def pages(page_name):
+    if page_name not in PAGES:
+        abort(404)
     menu = get_menu(active=page_name)
     content = get_content(page_name)
     result = render_template_string(HTML, menu=menu, content=content)
