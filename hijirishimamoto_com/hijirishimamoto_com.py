@@ -17,10 +17,15 @@ HTML = u"""<!DOCTYPE html>
 <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
 </head>
 <body>
-{{ menu|safe }}
 
+<div class="menu">
+{{ menu|safe }}
+</div>
+
+<div class="page-bg">
 <div class="content">
 {{ content|safe }}
+</div>
 </div>
 
 </body>
@@ -75,4 +80,4 @@ def pages(page_name):
 
 
 if __name__ == '__main__':
-    app.run('0.0.0.0', port=5001, debug=True)
+    app.run('0.0.0.0', port=5005, debug=True)

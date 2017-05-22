@@ -26,7 +26,7 @@ li a:hover:not(.active) {
     background-color: #4CAF50;
 }
 
-div.content {
+.content {
     width: 50%;
     padding-left: 80px;
     padding-top: 80px;
@@ -36,4 +36,24 @@ div.content {
     padding-right: 30px;
     padding-bottom: 50px;
     */
+}
+
+body {
+  font-family: "Arial";
+  color: #fff;
+}
+
+.page-bg {
+  background: url('/static/background.jpg');
+  -webkit-filter: blur(0.5px);
+  -moz-filter: blur(0.5px);
+  -o-filter: blur(0.5px);
+  -ms-filter: blur(0.5px);
+  filter: blur(0.5px);
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: -1;
 }
