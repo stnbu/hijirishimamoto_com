@@ -3,7 +3,7 @@
 import os
 from sqlite3 import dbapi2 as sqlite3
 from flask import Flask, request, session, g, redirect, url_for, abort, \
-    flash, render_template_string, abort, send_from_directory
+    flash, render_template_string, abort, send_from_directory, render_template
 
 
 # create our little application :)
@@ -38,6 +38,24 @@ PAGES = [
     'lessons',
     'contact',
 ]
+
+
+from wtforms import Form, BooleanField, StringField, PasswordField, validators, TextAreaField, TextField
+class RegistrationForm(Form):
+    name = StringField('Name', [validators.Length(max=100)])
+    email = StringField('Email Address', [validators.Length(min=6, max=35)])
+    message = TextAreaField(u'Message', [validators.optional(), validators.length(max=200)])
+
+
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    form = RegistrationForm(request.form)
+    if request.method == 'POST' and form.validate():
+        data = form.name.data, form.email.data, form.message.data
+        flash('Thank You. Your message has been sent.')
+        return redirect(url_for('register'))
+    return render_template('register.html', form=form)
+
 
 def get_content(page_name):
     my_dir = os.path.dirname(os.path.realpath(__file__))
