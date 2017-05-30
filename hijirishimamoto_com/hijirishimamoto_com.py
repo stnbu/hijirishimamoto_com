@@ -36,7 +36,7 @@ HTML = u"""<!DOCTYPE html>
 
 PAGES = [
     'home',
-    'music',
+    #'music',
     'biography',
     'lessons',
     'contact',
