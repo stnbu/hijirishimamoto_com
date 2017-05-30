@@ -82,12 +82,15 @@ def favicon():
 
 def send_mail(form):
 
+    name = form.name.data.encode('utf-8')
+    message = form.message.data.encode('utf-8')
+    email = form.email.data.encode('utf-8')
+
     _from = 'noreply@unintuitive.org'
     to = 'hshimamoto@gmail.com'
-    subject = 'Message from "{0} <{1}>"'.format(form.name.data, form.email.data)
-    message = form.message.data
+    subject = 'Message from "{0} <{1}>"'.format(name, email)
 
-    message = MIMEText(form.message.data)
+    message = MIMEText(message)
     message['Subject'] = subject
     message['From'] = _from
     message['To'] = to
