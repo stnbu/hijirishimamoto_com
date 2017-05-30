@@ -4,6 +4,8 @@ import os
 from sqlite3 import dbapi2 as sqlite3
 from flask import Flask, request, session, g, redirect, url_for, abort, \
     flash, render_template_string, abort, send_from_directory, render_template, request
+import smtplib
+from email.mime.text import MIMEText
 
 
 # create our little application :)
@@ -42,7 +44,7 @@ PAGES = [
 
 
 from wtforms import Form, BooleanField, StringField, PasswordField, validators, TextAreaField, TextField
-class RegistrationForm(Form):
+class ContactForm(Form):
     name = StringField('Name', [validators.Length(max=100)])
     email = StringField('Email Address', [validators.Length(min=6, max=35)])
     message = TextAreaField(u'Message', [validators.optional(), validators.length(max=200)])
@@ -77,6 +79,22 @@ def favicon():
     return send_from_directory(os.path.join(app.root_path, 'static'),
                                'favicon.ico', mimetype='image/vnd.microsoft.icon')
 
+def send_mail(form):
+
+    _from = 'noreply@unintuitive.org'
+    to = 'hshimamoto@gmail.com'
+    subject = 'Message from "{0} <{1}>"'.format(form.name.data, form.email.data)
+    message = form.message.data
+
+    message = MIMEText(form.message.data)
+    message['Subject'] = subject
+    message['From'] = _from
+    message['To'] = to
+    s = smtplib.SMTP('localhost')
+    s.sendmail(_from, [to], message.as_string())
+    s.quit()
+
+
 @app.route('/<page_name>/', methods=['GET', 'POST'])
 def pages(page_name):
     if page_name not in PAGES:
@@ -85,7 +103,9 @@ def pages(page_name):
     if request.method == 'POST':
         if page_name != 'contact':
             raise Exception('Not here!')
-        result = render_template_string(HTML, menu=menu, content='<div>Thank You. Your message has been sent.')
+        form = ContactForm(request.form)
+        send_mail(form)
+        result = render_template_string(HTML, menu=menu, content='<div id="notification">Thank You. Your message has been sent.<div>')
         return result
     content = get_content(page_name)
     result = render_template_string(HTML, menu=menu, content=content)
