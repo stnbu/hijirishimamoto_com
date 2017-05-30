@@ -45,9 +45,10 @@ PAGES = [
 
 from wtforms import Form, BooleanField, StringField, PasswordField, validators, TextAreaField, TextField
 class ContactForm(Form):
-    name = StringField('Name', [validators.Length(max=100)])
-    email = StringField('Email Address', [validators.Length(min=6, max=35)])
-    message = TextAreaField(u'Message', [validators.optional(), validators.length(max=200)])
+    name = StringField(u'Name', [validators.Length(max=200)])
+    email = StringField(u'Email address', [validators.DataRequired(), validators.Email()])
+    message = TextAreaField(u'Message', [validators.DataRequired(), validators.length(max=9000)])
+
 
 def get_content(page_name):
     my_dir = os.path.dirname(os.path.realpath(__file__))
