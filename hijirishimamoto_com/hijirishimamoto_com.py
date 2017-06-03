@@ -16,6 +16,8 @@ app.secret_key = 'ngioewsnfewldjnfv jc gnkj cf nxjkhc fnj bfsz'
 HTML = u"""<!DOCTYPE html>
 <html>
 <head>
+<meta name="keywords" content="saxophone, sax, piano, clarinet, music lesson, milpitas, san jose, fremont, south bay area, bay area, silicon valley, online, experienced, japanese, female, bilingual" />
+<title>Lessons</title>
 <link rel="stylesheet" type="text/css" href="/static/style.css">
 <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
 </head>
