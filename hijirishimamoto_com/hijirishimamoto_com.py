@@ -27,10 +27,8 @@ HTML = u"""<!DOCTYPE html>
 {{ menu|safe }}
 </div>
 
-<div class="page-bg">
 <div class="content">
 {{ content|safe }}
-</div>
 </div>
 
 </body>
