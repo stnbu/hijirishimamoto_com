@@ -39,6 +39,7 @@ PAGES = [
     'biography',
     'music',
     'lessons',
+    'access',
     'contact',
 ]
 
