@@ -28,6 +28,8 @@ li a:hover:not(.active) {
 }
 
 .content {
+    background-color: rgba(0,0,0,0.7);
+    border-radius: 5px;
     width: 50%;
     padding-left: 50px;
     padding-top: 50px;
@@ -35,7 +37,6 @@ li a:hover:not(.active) {
     padding-bottom: 50px;
     font-family: "Arial";
     color: #fff;
-    background-color: #000;
 }
 
 .content a, .content a:visited, .content a:active {
@@ -46,6 +47,7 @@ li a:hover:not(.active) {
 
 
 body {
+    background-color: rgb(237, 216, 244);
     background-image: url(/static/background.jpg);
     background-size: cover;
     background-repeat: no-repeat;

@@ -20,6 +20,7 @@ HTML = u"""<!DOCTYPE html>
 <title>Lessons</title>
 <link rel="stylesheet" type="text/css" href="/static/style.css">
 <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+{{ head|safe }}
 </head>
 <body>
 
@@ -100,11 +101,34 @@ def send_mail(form):
     s.sendmail(_from, [to], message.as_string())
     s.quit()
 
+def get_head(page_name):
+    'hack. i dont care.'
+    head = ''
+    if page_name not in ['home', 'music']:
+        head = """
+            <style>
+                .content {
+                    margin: 0 auto;
+                }
+            </style>
+        """
+    if page_name in ['home', 'music']:
+        head = """
+            <style>
+                .content {
+                    display: inline-block;
+                    width: auto;
+                }
+            </style>
+        """
+    return head
+
 
 @app.route('/<page_name>/', methods=['GET', 'POST'])
 def pages(page_name):
     if page_name not in PAGES:
         abort(404)
+    head = get_head(page_name)
     menu = get_menu(active=page_name)
     if request.method == 'POST':
         if page_name != 'contact':
@@ -114,7 +138,10 @@ def pages(page_name):
         result = render_template_string(HTML, menu=menu, content='<div id="notification">Thank You. Your message has been sent.<div>')
         return result
     content = get_content(page_name)
-    result = render_template_string(HTML, menu=menu, content=content)
+    result = render_template_string(HTML,
+                                    head=head,
+                                    menu=menu,
+                                    content=content)
     return result
 
 
