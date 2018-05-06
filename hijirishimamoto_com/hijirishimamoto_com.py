@@ -113,14 +113,29 @@ def get_head(page_name):
             </style>
         """
     if page_name in ['home', 'music']:
+
+        if page_name == 'home':
+            padding = '100px'
+        elif page_name == 'music':
+            padding = 'top'
+
         head = """
             <style>
-                .content {
+                body {{
+                    background-image: url(/static/{page_name}.jpg);
+                    background-color: rgb(0, 0, 0);
+                    background-position: center {background_img_top_padding};
+                }}
+                .content {{
                     display: inline-block;
                     width: auto;
-                }
+                }}
             </style>
-        """
+        """.format(
+            page_name=page_name,
+            background_img_top_padding=padding,
+        )
+
     return head
 
 
